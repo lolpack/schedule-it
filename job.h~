@@ -1,0 +1,19 @@
+#ifndef JOB_H
+#define JOB_H
+
+#include iostream
+using namespace std;
+
+class job
+{
+ public:
+  job();
+  job(int id, int burst);
+
+  void setID();
+  void setBurst();
+  int getID();
+  int getBurst();
+};
+
+#endif
