@@ -12,6 +12,7 @@ Job::Job(int id, int burst)
   jobBurst = burst;
 }
 
+
 void Job::setID(int id)
 {
   jobID = id;
