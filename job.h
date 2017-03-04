@@ -12,12 +12,16 @@ class job
 
   void setID(int id);
   void setBurst(int burst);
+  void setTurnAround(int turnAround);
   int getID();
   int getBurst();
+  int getTurnAround();
+  int getWait();
 
  private:
   int jobID;
   int jobBurst;
+  int turnAroundTime;
 };
 
 #endif
