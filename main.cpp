@@ -2,19 +2,24 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include <stdlib.h>
-#include <stdio.h>
-#include <sstream>
+#include <queue>
 #include "job.h"
 
 using namespace std;
 
 void insertProcesses(vector<Job>& processes, vector<int>& ids, vector<int>& bursts, int size);
+void roundRobin(vector<Job>& original, int size);
 
 int main()
 {
+  string filename;
+
+  cout << "Please Enter the name of the file you wish to read: ";
+  cin >> filename;
+  
+
   string text;
-  ifstream infile("jobs.txt");
+  ifstream infile(filename);
   vector<int> ids;
   vector<int> bursts;
   vector<Job> processes;
@@ -40,10 +45,18 @@ int main()
 
   insertProcesses(processes, ids, bursts, size);
 
-  // for(int j = 0; j < size; j++)
+  //Round Robin
+  roundRobin(processes, size);
+
+  // //copy test
+  // Job arr[size];
+  // for(int v = 0; v < size; v++)
   // 	{
-  // 	  cout << processes[j].getID() << "||" << processes[j].getBurst() << endl;
+  // 	  arr[v] = processes[v];
   // 	}
+  // cout << "TEST " << arr[19].getID() << endl;
+
+  
   return 0;
 }
 
@@ -54,31 +67,64 @@ void insertProcesses(vector<Job>& processes, vector<int>& ids, vector<int>& burs
 	  Job newJob(ids[i],bursts[i]);
 	  processes.push_back(newJob);
 	}
-  vector<string> records;
-  char numbers[20];
-  char buffer[10];
-  vector<job> processes;
-  int i = 0;
+}
 
-  if(infile.is_open()) {
-	while(infile.good())
-	  {
-		infile.getline(numbers, 256);
-		cout << "Scan #" << i <<": " << endl;
-		cout << numbers << endl;
-		i++;
-		while(getline(numbers, buffer, ',')
-		  {
-			ids.pushback(atoi(buffer));
-		  }
-	  }
-	infile.close();
-  }
-  
-  else
+void roundRobin(vector<Job>& original, int size)
+{
+  Job RRProcesses[size];
+  queue<Job> jobQ;
+  int timeQuantum = 1;
+  Job* ptr;
+  int n = 0;
+  int m = 1;
+  int remainingBurst;
+
+  cout << "Enter a Time Quantum: ";
+  cin >> timeQuantum;
+
+  //Copy original vector so it doesn't get modified
+  for(int i = 0; i < size; i++)
 	{
-	  cerr << "Error opening file" << endl;
+	  // Job newJob(original[i].getID(), original[i].getBurst());
+	  // RRProcesses.push_back(newJob);
+	  RRProcesses[i] = original[i];
 	}
+  //Queue up
+  for(int i = 0; i < size; i++)
+	{
+	  jobQ.push(RRProcesses[i]);
+	} 
+  while(!jobQ.empty())
+	{
+	  m = 1; //reset
+	  ptr = &jobQ.front();
+	  cout << "P" << ptr->getID() << " started at " << n << " seconds." << endl;
 
-  return 0;
+	  while(m <= timeQuantum && ptr->getBurst() != 0)
+		{
+		  remainingBurst = ptr->getBurst();
+		  cout << "P" << ptr->getID() << " Processing... " << n << "seconds." << endl;
+		  ptr->setBurst(remainingBurst - 1);
+		  m++;
+		  n++;
+		}
+
+	  if(ptr->getBurst() > 0)
+	  	{
+	  	  jobQ.pop();
+	  	  jobQ.push(*ptr);
+	  	  cout <<"P" << jobQ.back().getID() << " put to back of queue/Time remaining: " << jobQ.back().getBurst() << "s" << endl;
+	  	}
+	  else
+	  	{
+	  	  cout <<"P" << ptr->getID() << " ended on time " << n << endl;
+	  	  jobQ.pop();
+	  	}
+	  
+	  
+	}
+  
+
+  //cout << ptr->getID() << endl;;
+  
 }
