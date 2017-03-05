@@ -22,3 +22,5 @@ class Job
   int jobBurst;
   int turnAroundTime;
 };
+
+#endif

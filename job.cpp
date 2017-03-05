@@ -8,6 +8,10 @@ Job::Job()
 }
 
 Job::Job(int id, int burst)
+{
+  jobID = id;
+  jobBurst = burst;
+}
 
 void Job::setID(int id)
 {
@@ -34,7 +38,7 @@ int Job::getBurst()
   return jobBurst;
 }
 
-int job::getTurnAround()
+int Job::getTurnAround()
 {
   return turnAroundTime;
 }
