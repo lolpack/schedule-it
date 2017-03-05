@@ -1,39 +1,35 @@
 #include "job.h"
 
-job::job()
+Job::Job()
 {
-  jobID = 0; // Synonymous with arrival time
+  jobID = 0;
   jobBurst = 0;
   turnAroundTime = 0;
 }
 
-job::job(int id, int burst)
-{
-  jobID = id;
-  jobBurst = burst;
-}
+Job::Job(int id, int burst)
 
-void job::setID(int id)
+void Job::setID(int id)
 {
   jobID = id;
 }
 
-void job::setBurst(int burst)
+void Job::setBurst(int burst)
 {
   jobBurst = burst;
 }
 
-void job::setTurnAround(int turnAround)
+void Job::setTurnAround(int turnAround)
 {
   turnAroundTime = turnAround;
 }
 
-int job::getID()
+int Job::getID()
 {
   return jobID;
 }
 
-int job::getBurst()
+int Job::getBurst()
 {
   return jobBurst;
 }
@@ -43,7 +39,7 @@ int job::getTurnAround()
   return turnAroundTime;
 }
 
-int job::getWait()
+int Job::getWait()
 {
   return turnAroundTime - jobID; //
 }

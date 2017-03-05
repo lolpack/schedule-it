@@ -4,12 +4,11 @@
 #include <iostream>
 using namespace std;
 
-class job
+class Job
 {
  public:
-  job();
-  job(int id, int burst);
-
+  Job();
+  Job(int id, int burst);
   void setID(int id);
   void setBurst(int burst);
   void setTurnAround(int turnAround);
@@ -23,5 +22,3 @@ class job
   int jobBurst;
   int turnAroundTime;
 };
-
-#endif
