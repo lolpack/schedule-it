@@ -32,6 +32,7 @@ void FCFS(vector<Job> Jobs, int size) {
         jobQ.pop();
     }
 
+    cout << "Total processing time: " << totalTime << " seconds." << endl;
     cout << "Average turn around time for Jobs: " << totalTime / size << endl;
     cout << "Overall throughput: " << totalTime / size << endl;
     cout << "Average wait time: " << totalWait / size << endl;
