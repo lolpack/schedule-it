@@ -3,7 +3,9 @@
 #include <fstream>
 #include <vector>
 #include <queue>
-#include "job.h"
+#include "job.cpp"
+
+#include "firstComeFirstServe.cpp"
 
 using namespace std;
 
@@ -16,7 +18,7 @@ int main()
 
   cout << "Please Enter the name of the file you wish to read: ";
   cin >> filename;
-  
+
 
   string text;
   ifstream infile(filename);
@@ -37,7 +39,7 @@ int main()
 	  }
 	else
 	  {
-		cerr << "Error opening file" << endl;
+		throw std::invalid_argument( "Error opening file!" );
 	  }
   infile.close();
 
@@ -48,6 +50,10 @@ int main()
   //Round Robin
   roundRobin(processes, size);
 
+  // First come First Server
+
+  FCFS(processes, size);
+
   // //copy test
   // Job arr[size];
   // for(int v = 0; v < size; v++)
@@ -56,7 +62,7 @@ int main()
   // 	}
   // cout << "TEST " << arr[19].getID() << endl;
 
-  
+
   return 0;
 }
 
@@ -71,7 +77,7 @@ void insertProcesses(vector<Job>& processes, vector<int>& ids, vector<int>& burs
 
 void roundRobin(vector<Job>& original, int size)
 {
-  Job RRProcesses[size];
+  Job *RRProcesses = new Job[size];
   queue<Job> jobQ;
   int timeQuantum = 1;
   Job* ptr;
@@ -93,7 +99,7 @@ void roundRobin(vector<Job>& original, int size)
   for(int i = 0; i < size; i++)
 	{
 	  jobQ.push(RRProcesses[i]);
-	} 
+	}
   while(!jobQ.empty())
 	{
 	  m = 1; //reset
@@ -120,11 +126,11 @@ void roundRobin(vector<Job>& original, int size)
 	  	  cout <<"P" << ptr->getID() << " ended on time " << n << endl;
 	  	  jobQ.pop();
 	  	}
-	  
-	  
+
+
 	}
-  
+
 
   //cout << ptr->getID() << endl;;
-  
+
 }
