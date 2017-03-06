@@ -6,6 +6,7 @@
 #include "job.cpp"
 
 #include "firstComeFirstServe.cpp"
+#include "shortestJobFirst.cpp"
 
 using namespace std;
 
@@ -51,8 +52,10 @@ int main()
   roundRobin(processes, size);
 
   // First come First Server
-
   FCFS(processes, size);
+
+  //Shortest Job First
+  SJF(processes, size);
 
   // //copy test
   // Job arr[size];
