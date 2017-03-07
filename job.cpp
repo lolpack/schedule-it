@@ -58,7 +58,7 @@ int Job::getTurnAround()
 
 int Job::getWait()
 {
-  return turnAroundTime - jobID; //
+  return getTurnAround() - getBurst();
 }
 
 int Job::getStartTime()

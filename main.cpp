@@ -91,22 +91,19 @@ void FCFS(vector<Job> Jobs, int size) {
   int waitTime = 0;
   int totalWait;
   while(!jobQ.empty()) {
-	curJob = &jobQ.front(); //Always pull from front of queue with FCFS
-	totalTime += curJob->getBurst();
-	curJob->setTurnAround(totalTime);
-	totalWait += curJob->getWait();
-	jobQ.pop();
+  	curJob = &jobQ.front(); //Always pull from front of queue with FCFS
+  	totalTime += curJob->getBurst();
+  	curJob->setTurnAround(totalTime);
+  	totalWait += curJob->getWait(); // used for calculating average later
+  	jobQ.pop();
   }
 
   cout << setw(30) << right << "FIRST COME FIRST SERVE" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
   cout << "Average turn around time for Jobs: " << totalTime / size << endl;
-  cout << "Overall throughput: " << totalTime / size << endl;
+  cout << "Overall throughput: " <<  float((totalTime / size) / 60) <<  " processes per minute" << endl;
   cout << "Average wait time: " << totalWait / size << endl;
 }
-
-
-  
 
 void roundRobin(vector<Job>& original, int size)
 {
@@ -218,17 +215,18 @@ void SJF(vector<Job> Jobs, int size) {
   Job* curJob;
 
   int totalTime = 0;
-  int waitTime = 0;
-  int totalWait;
+  int totalWait = 0;
   while(!jobQ.empty()) {
-	curJob = &jobQ.front(); //Always pull from front of queue with FCFS
-	totalTime += curJob->getBurst();
-	curJob->setTurnAround(totalTime);
-	totalWait += curJob->getWait();
-	jobQ.pop();
+  	curJob = &jobQ.front(); //Always pull from front of queue with FCFS
+  	totalTime += curJob->getBurst();
+  	curJob->setTurnAround(totalTime);
+  	totalWait += curJob->getWait();
+  	jobQ.pop();
   }
   cout << setw(30) << right << "SHORTEST JOB FIRST" << endl;
   cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
+  cout << "Average wait time for Jobs: " << totalWait / size << endl;
   cout << "Average turn around time for Jobs: " << totalTime / size << endl;
+  cout << "Overall throughput: " <<  float((totalTime / size) / 60)  <<  " processes per minute" <<  endl;
 }
