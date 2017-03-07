@@ -4,7 +4,7 @@
 #include <vector>
 #include <queue>
 #include <iomanip>
-#include "job.h"
+#include "job.cpp"
 
 
 #include "firstComeFirstServe.cpp"
@@ -94,7 +94,7 @@ void roundRobin(vector<Job>& original, int size)
   int remainingBurst; //round robin subtracts bursts
   int started[size + 1];//+1 because the job IDs start at 1 (if it starts at 0, we just have an extra box
   int totalTurnAround = 0; //Should count all the turnArounds for average and other uses.
-  
+
 
   cout << "Enter a Time Quantum: ";
   cin >> timeQuantum;
@@ -160,6 +160,6 @@ void roundRobin(vector<Job>& original, int size)
   cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
   cout << "Average Wait Time: " << (totalTurnAround - n)/size << endl;
-  
+
 
 }

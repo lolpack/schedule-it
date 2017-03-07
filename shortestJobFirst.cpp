@@ -1,3 +1,5 @@
+#include <algorithm>
+
 bool sortJobs(Job job1, Job job2) {
     return (job1.getBurst() < job2.getBurst());
 }
