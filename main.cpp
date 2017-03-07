@@ -6,8 +6,9 @@
 #include <iomanip>
 #include "job.h"
 
-// #include "firstComeFirstServe.cpp"
-//#include "roundRobin.cpp"
+
+#include "firstComeFirstServe.cpp"
+#include "shortestJobFirst.cpp"
 
 using namespace std;
 
@@ -44,20 +45,32 @@ int main()
 
   // First come First Server
 
+
   //FCFS(processes, size);
 
   //Round Robin
   roundRobin(processes, size);
 
-	
+
+  FCFS(processes, size);
+
+  //Shortest Job First
+  SJF(processes, size);
+
+  // //copy test
+  // Job arr[size];
+  // for(int v = 0; v < size; v++)
+  // 	{
+  // 	  arr[v] = processes[v];
+  // 	}
+  // cout << "TEST " << arr[19].getID() << endl;
+
 	}
 	else
 	  {
 		cerr << "Error Opening File" << endl;
 	  }
   infile.close();
-
-
   return 0;
 }
 
