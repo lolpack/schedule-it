@@ -1,9 +1,6 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <vector>
-#include <queue>
-#include "job.h"
 
 using namespace std;
 
