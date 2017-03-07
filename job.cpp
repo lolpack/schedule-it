@@ -1,5 +1,6 @@
 #include "job.h"
 
+// Job class
 Job::Job()
 {
   jobID = 0;
@@ -9,6 +10,7 @@ Job::Job()
   endTime = 0;
 }
 
+// Overloaded constructor
 Job::Job(int id, int burst)
 {
   jobID = id;
