@@ -5,7 +5,7 @@
 #include <queue>
 #include <iomanip>
 #include <algorithm>
-#include "job.h"
+#include "job.cpp"
 
 
 using namespace std;
@@ -106,7 +106,7 @@ void FCFS(vector<Job> Jobs, int size) {
 }
 
 
-  
+
 
 void roundRobin(vector<Job>& original, int size)
 {
@@ -230,5 +230,6 @@ void SJF(vector<Job> Jobs, int size) {
   cout << setw(30) << right << "SHORTEST JOB FIRST" << endl;
   cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
+  cout << "Average wait time for Jobs: " << totalWait / size << endl;
   cout << "Average turn around time for Jobs: " << totalTime / size << endl;
 }
