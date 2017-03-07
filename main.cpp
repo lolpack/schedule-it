@@ -128,10 +128,10 @@ void roundRobin(vector<Job>& original, int size)
 	}
 
   //hash table for flagging
-  for(int i = 0; i < size+1; i++) //fill hash table with 0s
-	{
-	  started[i] = 0;
-	}
+  // for(int i = 0; i < size+1; i++) //fill hash table with 0s
+  // 	{
+  // 	  started[i] = 0;
+  // 	}
   //Queue up
   for(int i = 0; i < size; i++)
 	{
@@ -143,11 +143,11 @@ void roundRobin(vector<Job>& original, int size)
 	  ptr = &jobQ.front();
 	  //cout << "P" << ptr->getID() << " started at " << n << " seconds." << endl;
 
-	  if(started[ptr->getID()] == 0)//hash table flagger
-		{
-		  ptr->setStartTime(n);
-		  started[ptr->getID()]++; // FLAGGED can no longer change start time.
-		}
+	  // if(started[ptr->getID()] == 0)//hash table flagger
+	  // 	{
+	  // 	  ptr->setStartTime(n);
+	  // 	  started[ptr->getID()]++; // FLAGGED can no longer change start time.
+	  // 	}
 
 	  while(m <= timeQuantum && ptr->getBurst() > 0)
 		{
@@ -163,15 +163,13 @@ void roundRobin(vector<Job>& original, int size)
 	  	{
 	  	  jobQ.pop();
 	  	  jobQ.push(*ptr);
-	  	  //cout <<"P" << jobQ.back().getID() << " put to back of queue/Time remaining: "
-		  //   << jobQ.back().getBurst() << "s" << endl;
 	  	}
 	  //when process hits 0 burst time
 	  else
 	  	{
 	  	  //cout <<"P" << ptr->getID() << " ended on time " << n << endl;
 		  ptr->setEndTime(n);
-		  int turnA = ptr->getEndTime() - ptr->getStartTime();
+		  int turnA = ptr->getEndTime();
 		  ptr->setTurnAround(turnA);
 		  totalTurnAround += ptr->getTurnAround();
 	  	  jobQ.pop();
@@ -179,10 +177,11 @@ void roundRobin(vector<Job>& original, int size)
 
 	}
 
+  
   cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Total processing time: " << n << endl;
   cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
-  cout << "Overall throughput: " << n / size << endl;
+  cout << "Overall throughput: "  <<(double)(60/(n/size)) << endl;
   cout << "Average Wait Time: " << (totalTurnAround - n)/size << endl;
 }
 
