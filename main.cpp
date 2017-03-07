@@ -181,6 +181,7 @@ void roundRobin(vector<Job>& original, int size)
 
   cout << setprecision(3) << fixed << showpoint;
   double throughPut = 60/((double)n/(double)size);
+
   cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Total processing time: " << n << endl;
   cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
@@ -189,7 +190,7 @@ void roundRobin(vector<Job>& original, int size)
 }
 
 bool sortJobs(Job job1, Job job2) {
-  return (job1.getBurst() < job2.getBurst());
+  return (job1.getBurst() < job2.getBurst()); // Only swap if shorter, keeps sort stable.
 }
 
 
@@ -219,7 +220,7 @@ void SJF(vector<Job> Jobs, int size) {
   int totalTime = 0;
   int totalWait = 0;
   while(!jobQ.empty()) {
-  	curJob = &jobQ.front(); //Always pull from front of queue with FCFS
+  	curJob = &jobQ.front(); // Now that the queue is sorted by length, we can do the shortest job first by pulling from the front of the queue.
   	totalTime += curJob->getBurst();
   	curJob->setTurnAround(totalTime);
   	totalWait += curJob->getWait();
