@@ -98,10 +98,12 @@ void FCFS(vector<Job> Jobs, int size) {
   	jobQ.pop();
   }
 
+  cout << setprecision(3) << fixed << showpoint;
+  double throughPut = 60/((double)totalTime/(double)size);
   cout << setw(30) << right << "FIRST COME FIRST SERVE" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
   cout << "Average turn around time for Jobs: " << totalTime / size << endl;
-  cout << "Overall throughput: " <<  float((totalTime / size) / 60) <<  " processes per minute" << endl;
+  cout << "Overall throughput: " <<  throughPut <<  " processes per minute" << endl;
   cout << "Average wait time: " << totalWait / size << endl;
 }
 
@@ -177,11 +179,12 @@ void roundRobin(vector<Job>& original, int size)
 
 	}
 
-  
+  cout << setprecision(3) << fixed << showpoint;
+  double throughPut = 60/((double)n/(double)size);
   cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Total processing time: " << n << endl;
   cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
-  cout << "Overall throughput: "  <<(double)(60/(n/size)) << endl;
+  cout << "Overall throughput: "  << throughPut << endl;
   cout << "Average Wait Time: " << (totalTurnAround - n)/size << endl;
 }
 
@@ -222,10 +225,12 @@ void SJF(vector<Job> Jobs, int size) {
   	totalWait += curJob->getWait();
   	jobQ.pop();
   }
+
+  cout << setprecision(3) << fixed << showpoint;
+  double throughPut = 60/((double)totalTime/(double)size);
   cout << setw(30) << right << "SHORTEST JOB FIRST" << endl;
-  cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
   cout << "Average wait time for Jobs: " << totalWait / size << endl;
   cout << "Average turn around time for Jobs: " << totalTime / size << endl;
-  cout << "Overall throughput: " <<  float((totalTime / size) / 60)  <<  " processes per minute" <<  endl;
+  cout << "Overall throughput: " <<  throughPut  <<  " processes per minute" <<  endl;
 }
