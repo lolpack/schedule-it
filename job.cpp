@@ -5,6 +5,8 @@ Job::Job()
   jobID = 0;
   jobBurst = 0;
   turnAroundTime = 0;
+  startTime = 0;
+  endTime = 0;
 }
 
 Job::Job(int id, int burst)
@@ -28,6 +30,17 @@ void Job::setTurnAround(int turnAround)
   turnAroundTime = turnAround;
 }
 
+void Job::setStartTime(int start)
+{
+  startTime = start;
+}
+
+void Job::setEndTime(int end)
+{
+  endTime = end;
+}
+
+
 int Job::getID()
 {
   return jobID;
@@ -46,4 +59,14 @@ int Job::getTurnAround()
 int Job::getWait()
 {
   return turnAroundTime - jobID; //
+}
+
+int Job::getStartTime()
+{
+  return startTime;
+}
+
+int Job::getEndTime()
+{
+  return endTime;
 }

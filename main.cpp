@@ -3,7 +3,9 @@
 #include <fstream>
 #include <vector>
 #include <queue>
-#include "job.cpp"
+#include <iomanip>
+#include "job.h"
+
 
 #include "firstComeFirstServe.cpp"
 #include "shortestJobFirst.cpp"
@@ -37,21 +39,19 @@ int main()
 		  bursts.push_back(stoi(text.substr(text.find(",") +1)));
 		  }
 	  }
-	  }
-	else
-	  {
-		throw std::invalid_argument( "Error opening file!" );
-	  }
-  infile.close();
-
-  int size = ids.size();
+	int size = ids.size();
 
   insertProcesses(processes, ids, bursts, size);
+
+  // First come First Server
+
+
+  //FCFS(processes, size);
 
   //Round Robin
   roundRobin(processes, size);
 
-  // First come First Server
+
   FCFS(processes, size);
 
   //Shortest Job First
@@ -65,7 +65,12 @@ int main()
   // 	}
   // cout << "TEST " << arr[19].getID() << endl;
 
-
+	}
+	else
+	  {
+		cerr << "Error Opening File" << endl;
+	  }
+  infile.close();
   return 0;
 }
 
@@ -82,11 +87,14 @@ void roundRobin(vector<Job>& original, int size)
 {
   Job *RRProcesses = new Job[size];
   queue<Job> jobQ;
-  int timeQuantum = 1;
-  Job* ptr;
-  int n = 0;
-  int m = 1;
-  int remainingBurst;
+  int timeQuantum = 1; //By default it's 1 from the assignment, but it can  be changed
+  Job* ptr;  //Queue Pointer
+  int n = 0; //Process Counter (Can also be considere total burst time).
+  int m = 0; //Time Quantum Counter
+  int remainingBurst; //round robin subtracts bursts
+  int started[size + 1];//+1 because the job IDs start at 1 (if it starts at 0, we just have an extra box
+  int totalTurnAround = 0; //Should count all the turnArounds for average and other uses.
+  
 
   cout << "Enter a Time Quantum: ";
   cin >> timeQuantum;
@@ -94,9 +102,13 @@ void roundRobin(vector<Job>& original, int size)
   //Copy original vector so it doesn't get modified
   for(int i = 0; i < size; i++)
 	{
-	  // Job newJob(original[i].getID(), original[i].getBurst());
-	  // RRProcesses.push_back(newJob);
 	  RRProcesses[i] = original[i];
+	}
+
+  //hash table for flagging
+  for(int i = 0; i < size+1; i++) //fill hash table with 0s
+	{
+	  started[i] = 0;
 	}
   //Queue up
   for(int i = 0; i < size; i++)
@@ -105,35 +117,49 @@ void roundRobin(vector<Job>& original, int size)
 	}
   while(!jobQ.empty())
 	{
-	  m = 1; //reset
+	  m = 0; //reset
 	  ptr = &jobQ.front();
 	  cout << "P" << ptr->getID() << " started at " << n << " seconds." << endl;
 
-	  while(m <= timeQuantum && ptr->getBurst() != 0)
+	  if(started[ptr->getID()] == 0)//hash table flagger
+		{
+		  ptr->setStartTime(n);
+		  started[ptr->getID()]++; // FLAGGED can no longer change start time.
+		}
+
+	  while(m <= timeQuantum && ptr->getBurst() > 0)
 		{
 		  remainingBurst = ptr->getBurst();
-		  cout << "P" << ptr->getID() << " Processing... " << n << "seconds." << endl;
+		  //cout << "P" << ptr->getID() << " Processing... " << n << "seconds." << endl;
 		  ptr->setBurst(remainingBurst - 1);
 		  m++;
 		  n++;
 		}
 
+	  //if there's still burst time left
 	  if(ptr->getBurst() > 0)
 	  	{
 	  	  jobQ.pop();
 	  	  jobQ.push(*ptr);
-	  	  cout <<"P" << jobQ.back().getID() << " put to back of queue/Time remaining: " << jobQ.back().getBurst() << "s" << endl;
+	  	  cout <<"P" << jobQ.back().getID() << " put to back of queue/Time remaining: "
+			   << jobQ.back().getBurst() << "s" << endl;
 	  	}
+	  //when process hits 0 burst time
 	  else
 	  	{
 	  	  cout <<"P" << ptr->getID() << " ended on time " << n << endl;
+		  ptr->setEndTime(n);
+		  int turnA = ptr->getEndTime() - ptr->getStartTime();
+		  ptr->setTurnAround(turnA);
+		  totalTurnAround += ptr->getTurnAround();
 	  	  jobQ.pop();
 	  	}
 
-
 	}
 
-
-  //cout << ptr->getID() << endl;;
+  cout << setw(30) << right << "ROUND ROBIN" << endl;
+  cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
+  cout << "Average Wait Time: " << (totalTurnAround - n)/size << endl;
+  
 
 }
