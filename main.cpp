@@ -230,7 +230,7 @@ void SJF(vector<Job> Jobs, int size) {
   double avgWait = (double)totalWait/(double)size;
   cout << setw(30) << right << "SHORTEST JOB FIRST" << endl;
   cout << "Total processing time: " << totalTime << " seconds." << endl;
-  cout << "Average turn around time for Jobs: " << totalTime / size << endl;
+  cout << "Average turn around time for Jobs: " << avgTurnAround << endl;
   cout << "Overall throughput: " <<  throughPut  <<  " processes per minute" <<  endl;
-  cout << "Average wait time for Jobs: " << totalWait / size << endl;
+  cout << "Average wait time for Jobs: " << avgWait << endl;
 }
