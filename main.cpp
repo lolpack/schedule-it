@@ -233,4 +233,4 @@ void SJF(vector<Job> Jobs, int size) {
   cout << "Average turn around time for Jobs: " << avgTurnAround << endl;
   cout << "Overall throughput: " <<  throughPut  <<  " processes per minute" <<  endl;
   cout << "Average wait time for Jobs: " << avgWait << endl;
-}
+
