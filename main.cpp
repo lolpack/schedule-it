@@ -179,7 +179,7 @@ void roundRobin(vector<Job>& original, int size)
   double throughPut = 60/((double)n/(double)size);
   double avgTurnAround = (double)totalTurnAround/(double)size;
   double avgWait = ((double)totalTurnAround - (double)n)/(double)size;
-
+  
   cout << "Total processing time: " << n << endl;
   cout << "Average turn around time for Jobs: " << avgTurnAround << endl;
   cout << "Overall throughput: "  << throughPut << endl;
@@ -234,4 +234,3 @@ void SJF(vector<Job> Jobs, int size) {
   cout << "Overall throughput: " <<  throughPut  <<  " processes per minute" <<  endl;
   cout << "Average wait time for Jobs: " << avgWait << endl;
 }
-
