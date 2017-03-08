@@ -36,28 +36,32 @@ int main()
 	  {
 		while(getline(infile, text))
 		  {
-		  ids.push_back(stoi(text.substr(0,text.find(","))));
-		  bursts.push_back(stoi(text.substr(text.find(",") +1)));
+			//Inserts before comma to ids vector and after to burst comma
+			ids.push_back(stoi(text.substr(0,text.find(","))));
+			bursts.push_back(stoi(text.substr(text.find(",") +1)));
 		  }
 	  }
+	//total number of jobs
 	int size = ids.size();
 
-  insertProcesses(processes, ids, bursts, size);
+	//creates Job object vector to store information of both jobs and bursts
+	insertProcesses(processes, ids, bursts, size);
 
-  // First come First Server
-  FCFS(processes, size);
+	// First come First Server
+	FCFS(processes, size);
 
-  //Round Robin
-  roundRobin(processes, size);
+	//Round Robin
+	roundRobin(processes, size);
 
-  //Shortest Job First
-  SJF(processes, size);
+	//Shortest Job First
+	SJF(processes, size);
 
 	}
-	else
-	  {
-		cerr << "Error Opening File" << endl;
-	  }
+  //When a file can't be found
+  else
+	{
+	  cerr << "Error Opening File" << endl;
+	}
   infile.close();
   return 0;
 }
@@ -76,8 +80,6 @@ void FCFS(vector<Job> Jobs, int size) {
   queue<Job> jobQ;
   for(int i = 0; i < size; i++)
 	{
-	  // Job newJob(original[i].getID(), original[i].getBurst());
-	  // RRProcesses.push_back(newJob);
 	  RRProcesses[i] = Jobs[i];
 	}
   //Queue up
@@ -120,6 +122,7 @@ void roundRobin(vector<Job>& original, int size)
   int totalTurnAround = 0; //Should count all the turnArounds for average and other uses.
 
 
+  cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Enter a Time Quantum: ";
   cin >> timeQuantum;
 
@@ -129,11 +132,7 @@ void roundRobin(vector<Job>& original, int size)
 	  RRProcesses[i] = original[i];
 	}
 
-  //hash table for flagging
-  // for(int i = 0; i < size+1; i++) //fill hash table with 0s
-  // 	{
-  // 	  started[i] = 0;
-  // 	}
+  
   //Queue up
   for(int i = 0; i < size; i++)
 	{
@@ -143,18 +142,11 @@ void roundRobin(vector<Job>& original, int size)
 	{
 	  m = 0; //reset
 	  ptr = &jobQ.front();
-	  //cout << "P" << ptr->getID() << " started at " << n << " seconds." << endl;
 
-	  // if(started[ptr->getID()] == 0)//hash table flagger
-	  // 	{
-	  // 	  ptr->setStartTime(n);
-	  // 	  started[ptr->getID()]++; // FLAGGED can no longer change start time.
-	  // 	}
-
+	  //Used to decrease burst until m=timeQuantum and increments n to track time passed
 	  while(m <= timeQuantum && ptr->getBurst() > 0)
 		{
 		  remainingBurst = ptr->getBurst();
-		  //cout << "P" << ptr->getID() << " Processing... " << n << "seconds." << endl;
 		  ptr->setBurst(remainingBurst - 1);
 		  m++;
 		  n++;
@@ -179,10 +171,9 @@ void roundRobin(vector<Job>& original, int size)
 
 	}
 
+  //output
   cout << setprecision(3) << fixed << showpoint;
   double throughPut = 60/((double)n/(double)size);
-
-  cout << setw(30) << right << "ROUND ROBIN" << endl;
   cout << "Total processing time: " << n << endl;
   cout << "Average TurnAround Time: " << totalTurnAround/size << endl;
   cout << "Overall throughput: "  << throughPut << endl;

@@ -11,7 +11,7 @@ g++ -std=c++11 main.cpp job.h job.cpp
 To run
 
 ```
-./a
+./a.out
 ```
 
 You will be prompted to enter the filename containing the jobs file and the time quantum for Round Robin:
