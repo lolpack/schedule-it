@@ -78,6 +78,7 @@ void insertProcesses(vector<Job>& processes, vector<int>& ids, vector<int>& burs
 void FCFS(vector<Job> Jobs, int size) {
   Job *RRProcesses = new Job[size];
   queue<Job> jobQ;
+  // copy jobs into a new array to not mutate existing array
   for(int i = 0; i < size; i++)
 	{
 	  RRProcesses[i] = Jobs[i];
@@ -132,7 +133,7 @@ void roundRobin(vector<Job>& original, int size)
 	  RRProcesses[i] = original[i];
 	}
 
-  
+
   //Queue up
   for(int i = 0; i < size; i++)
 	{
@@ -212,7 +213,7 @@ void SJF(vector<Job> Jobs, int size) {
   int totalWait = 0;
   while(!jobQ.empty()) {
   	curJob = &jobQ.front(); // Now that the queue is sorted by length, we can do the shortest job first by pulling from the front of the queue.
-  	totalTime += curJob->getBurst();
+  	totalTime += curJob->getBurst(); // Set time spent equal to the burst
   	curJob->setTurnAround(totalTime);
   	totalWait += curJob->getWait();
   	jobQ.pop();
